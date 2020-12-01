@@ -13,9 +13,7 @@ class ProStagesController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('pro_stages/index.html.twig', [
-            'controller_name' => 'ProStagesController',
-        ]);
+        return $this->render('pro_stages/index.html.twig');
     }
 
     /**
