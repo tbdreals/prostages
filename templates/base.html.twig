@@ -4,38 +4,56 @@
         <meta charset="UTF-8">
         <title>{% block title %}ProStages{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
     <body>
         {% block entete %}
-          <div class="entete">
-            <h1>---------- ENTETE ----------</h1>
-            <h1>ProStages</h1>
+          <div class="row">
+            <div class="col-10 offset-1">
+              <br />
+              <h1>ProStages</h1>
+              <br />
+            </div>
           </div>
         {% endblock %}
 
         {% block menu %}
-          <div class="menu">
-            <h1>---------- MENU ----------</h1>
-            <div class="lien">
-                <a href="/">Accueil</a>
-            </div>
-            <div class="lien">
-                <a href="/entreprises">Entreprises</a>
-            </div>
-            <div class="formations">
-                <a href="/">Formations</a>
-            </div>
+        <div class="row">
+          <div class="col-10 offset-1">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navigation</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/">Accueil</a>
+                    <a class="nav-link" href="/entreprises">Entreprises</a>
+                    <a class="nav-link" href="/formations">Formations</a>
+                  </div>
+                </div>
+              </div>
+            </nav>
           </div>
+        </div>
+        <br />
         {% endblock %}
 
         {% block contenu %}
         {% endblock %}
 
         {% block footer %}
-          <h1>---------- FOOTER ----------</h1>
+        <br />
+          <div class="row">
+            <div class="col-10 offset-1">
+              <p>Contact : <a href='mailto:tbdreals@iutbayonne.univ-pau.fr'>tbdreals@iutbayonne.univ-pau.fr</a></p>
+            </div>
+          </div>
         {% endblock %}
 
         {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         {% endblock %}
     </body>
 </html>
