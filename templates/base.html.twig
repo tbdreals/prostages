@@ -3,12 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}ProStages{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- AJOUT CSS -->
         {% block stylesheets %}
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         {% endblock %}
     </head>
     <body>
       <div class="container">
+
+        <!-- ENTETE TITRE ET LOGO -->
         {% block entete %}
           <div class="row">
             <div class="col">
@@ -19,6 +24,7 @@
           </div>
         {% endblock %}
 
+        <!-- MENU DE NAVIGATION -->
         {% block menu %}
         <div class="row">
           <div class="col">
@@ -42,11 +48,13 @@
         <br />
         {% endblock %}
 
+        <!-- CONTENU DE LA PAGE A COMPLETER -->
         {% block contenu %}
         {% endblock %}
 
+        <!-- BAS DE PAGE -->
         {% block footer %}
-        <br />
+          <br />
           <div class="row">
             <div class="col">
               <p>Contact : <a href='mailto:tbdreals@iutbayonne.univ-pau.fr'>tbdreals@iutbayonne.univ-pau.fr</a></p>
@@ -55,6 +63,7 @@
         {% endblock %}
       </div>
 
+      <!-- AJOUT JAVASCRIPT -->
       {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
       {% endblock %}
