@@ -30,12 +30,12 @@ class Formation
     private $niveau;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $ville;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Stage::class, mappedBy="formation")
+     * @ORM\ManyToMany(targetEntity=Stage::class, mappedBy="formations")
      */
     private $stages;
 
@@ -78,7 +78,7 @@ class Formation
         return $this->ville;
     }
 
-    public function setVille(?string $ville): self
+    public function setVille(string $ville): self
     {
         $this->ville = $ville;
 
