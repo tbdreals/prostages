@@ -10,11 +10,17 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $formation_DUT_Info = new Formation();
-        $formation_DUT_Info->setIntitule("DUT Informatique");
-        $formation_DUT_Info->setNiveau("Bac +2");
-        $formation_DUT_Info->setVille("Anglet");
-        $manager->persist($formation_DUT_Info);
+        $faker = \Faker\Factory::create('fr_FR');
+
+        $nbFormations = 10;
+
+        for ($i=1; $i < $nbFormations; $i++) {
+          $formation = new Formation();
+          $formation->setIntitule($faker->realText($maxNbChars = 20, $indexSize = 2));
+          $formation->setNiveau($faker->regexify('Bac \+'.'[1-8]'));
+          $formation->setVille($faker->city());
+          $manager->persist($formation);
+        }
 
         $manager->flush();
     }
