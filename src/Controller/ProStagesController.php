@@ -6,12 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Entity\Ressource;
+use App\Entity\Stage;
 
 class ProStagesController extends AbstractController
 {
     /**
-     * @Route("/", name="prostages_accueil")
+     * @Route("/", name="pro_stages")
      */
     public function index(): Response
     {
@@ -22,7 +22,7 @@ class ProStagesController extends AbstractController
          $stages = $repositoryStage->findAll();
 
         // Envoyer les stages récupérés à la vue chargée de les afficher
-        return $this->render('pro_stages/index.html.twig', ['ressources' => $ressources]);
+        return $this->render('pro_stages/index.html.twig', ['stages' => $stages]);
     }
 
     /**
