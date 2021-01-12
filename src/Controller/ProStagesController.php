@@ -6,18 +6,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\Ressource;
+
 class ProStagesController extends AbstractController
 {
     /**
-     * @Route("/", name="pro_stages")
+     * @Route("/", name="prostages_accueil")
      */
     public function index(): Response
     {
-        return $this->render('pro_stages/index.html.twig');
+        // Récupérer le perository de l'entité Stage
+        $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
+
+        // Récupérer les ressources enregistrées en BD
+         $stages = $repositoryStage->findAll();
+
+        // Envoyer les stages récupérés à la vue chargée de les afficher
+        return $this->render('pro_stages/index.html.twig', ['ressources' => $ressources]);
     }
 
     /**
-     * @Route("/entreprises", name="entreprises")
+     * @Route("/entreprises", name="prostages_entreprises")
      */
     public function entreprises(): Response
     {
@@ -25,7 +34,7 @@ class ProStagesController extends AbstractController
     }
 
     /**
-     * @Route("/formations", name="formations")
+     * @Route("/formations", name="prostages_formations")
      */
     public function formations(): Response
     {
@@ -33,7 +42,7 @@ class ProStagesController extends AbstractController
     }
 
     /**
-     * @Route("/stages/{id}", name="stages")
+     * @Route("/stages/{id}", name="prostages_stages")
      */
     public function stages($id): Response
     {
