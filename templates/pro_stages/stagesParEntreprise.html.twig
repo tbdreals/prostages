@@ -15,7 +15,7 @@
           <p class="card-text">{{stageCourant.description}}<br /><br />
             Début du stage : {{stageCourant.dateDebut | date("d/m/Y")}}
           </p>
-          <a href="#" class="btn btn-primary">En savoir plus</a>
+          <a href="{{path('prostages_stages', {'id': stageCourant.id})}}" class="btn btn-primary">Consulter le stage</a>
         </div>
       </div>
       <br />

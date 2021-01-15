@@ -2,5 +2,39 @@
 
 {% block contenu %}
       <h1>Stage</h1>
-      <p>Identifiant : {{idStage}}</p>
+      <br />
+
+      <dl class="row">
+        <dt class="col-sm-3">Intitulé</dt>
+        <dd class="col-sm-9">{{stage.intitule}}</dd>
+
+        <dt class="col-sm-3 text-truncate">Entreprise d'accueil</dt>
+        <dd class="col-sm-9">{{stage.entreprise.nom}}</dd>
+
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">{{stage.description}}</dd>
+
+        <dt class="col-sm-3 text-truncate">Compétences requises</dt>
+        <dd class="col-sm-9">{{stage.competenceRequise}}</dd>
+
+        <dt class="col-sm-3 text-truncate">Date de début</dt>
+        <dd class="col-sm-9">{{stage.dateDebut | date('d/m/Y')}}</dd>
+
+        <dt class="col-sm-3">Durée</dt>
+        <dd class="col-sm-9">{{stage.duree}} jours</dd>
+
+        <dt class="col-sm-3 text-truncate">Email de l'entreprise</dt>
+        <dd class="col-sm-9">{{stage.emailEntreprise}}</dd>
+
+        <dt class="col-sm-3 text-truncate">Adresse de l'entreprise</dt>
+        <dd class="col-sm-9">{{stage.entreprise.adresse}}</dd>
+    </dl>
+
+    <h4>Ce stage est proposé aux formations :</h4>
+    <ul>
+      {% for formationCourante in stage.formations %}
+        <li>{{formationCourante.intitule}}</li>
+      {% endfor %}
+    </ul>
+  </li>
 {% endblock %}
