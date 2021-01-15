@@ -5,6 +5,7 @@
   <h3>Entreprises ayant proposé un stage</h3>
   <br />
 
+    {# Cette variable servira à savoir si il faut considérer que l'on est au début d'une nouvelle ligne #}
     {% set debutNouvelleLigne = true %}
 
     {% for entrepriseCourante in entreprises %}
@@ -15,7 +16,7 @@
         {% set debutNouvelleLigne = false %}
       {% endif %}
 
-      {# Afficher une carte pour la ressource courante #}
+      {# Afficher une carte pour l'entreprise courante #}
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">{{entrepriseCourante.nom}}</h5>
