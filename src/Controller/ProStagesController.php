@@ -9,17 +9,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
+use App\Repository\StageRepository;
+use App\Repository\EntrepriseRepository;
+use App\Repository\FormationRepository;
 
 class ProStagesController extends AbstractController
 {
     /**
      * @Route("/", name="pro_stages")
      */
-    public function index(): Response
+    public function index(StageRepository $repositoryStage): Response
     {
-        // Récupérer le repository de l'entité Stage
-        $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
-
         // Récupérer tous les stages enregistrés en BD
          $stages = $repositoryStage->findAll();
 
@@ -31,11 +31,8 @@ class ProStagesController extends AbstractController
     /**
      * @Route("/entreprises", name="prostages_entreprises")
      */
-    public function entreprises(): Response
+    public function entreprises(EntrepriseRepository $repositoryEntreprise): Response
     {
-        // On récupère le repository de l'entité entreprise
-        $repositoryEntreprise = $this->getDoctrine()->getRepository(Entreprise::class);
-
         // Récupérer toutes les entreprises enregistrées en BD
         $entreprises = $repositoryEntreprise->findAll();
 
@@ -47,11 +44,8 @@ class ProStagesController extends AbstractController
     /**
      * @Route("/formations", name="prostages_formations")
      */
-    public function formations(): Response
+    public function formations(FormationRepository $repositoryFormation): Response
     {
-        // On récupère le repository de l'entité formation
-        $repositoryFormation = $this->getDoctrine()->getRepository(Formation::class);
-
         // Récupérer toutes les formations enregistrées en BD
         $formations = $repositoryFormation->findAll();
 
@@ -63,14 +57,10 @@ class ProStagesController extends AbstractController
     /**
      * @Route("/stages/{id}", name="prostages_stages")
      */
-    public function stages($id): Response
+    public function stages(Stage $stage): Response
     {
-        // On récupère le repository de l'entité Stage
-        $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
-
-        // Recherche du stage donnt l'id a été fourni
-        $stage = $repositoryStage->find($id);
-
+        // L'utilisation du mécanisme d'injection nous permet d'obtenir directement l'objet stage
+        // La recherche par identifiant est effectuée automatiquement
         // Envoi du stage à la vue chargée de l'affichage
         return $this->render('pro_stages/stages.html.twig',
                               ['stage' => $stage]);
@@ -79,11 +69,10 @@ class ProStagesController extends AbstractController
     /**
      * @Route("/entreprises/{id}", name="prostages_stagesParEntreprise")
      */
-    public function stagesParEntreprise($id): Response
+    public function stagesParEntreprise(EntrepriseRepository $repositoryEntreprise, $id): Response
     {
-        // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $this->getDoctrine()->getRepository(Entreprise::class);
-
+        // Je n'utilise plus le mécanisme d'injection de dépendances "poussée" afin de garder le code lisible.
+        // On visualise mieux quelle recherche est appliquée sur le repository
         // Récupérer l'entreprises dont l'id a été fourni
         $entreprise = $repositoryEntreprise->find($id);
 
@@ -95,11 +84,8 @@ class ProStagesController extends AbstractController
     /**
      * @Route("/formations/{id}", name="prostages_stagesParFormation")
      */
-    public function stagesParFormation($id): Response
+    public function stagesParFormation(FormationRepository $repositoryFormation, $id): Response
     {
-        // On récupère le repository de l'entité Formation
-        $repositoryFormation = $this->getDoctrine()->getRepository(Formation::class);
-
         // Récupérer la formation dont l'id a été fourni
         $formation = $repositoryFormation->find($id);
 
