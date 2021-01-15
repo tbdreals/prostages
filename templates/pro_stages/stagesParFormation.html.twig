@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-  Derniers stages publiés
-{% endblock %}
-
 {% block contenu %}
-  <h1>Bienvenue sur Prostages</h1>
-  <h3>Tous les stages proposés</h3>
+  <h1>Formations</h1>
+  <h3>Stages proposés pour <span class="badge bg-secondary">{{formation.intitule}}</span></h3>
   <br />
 
-    {% for stageCourant in stages %}
+    {% for stageCourant in formation.stages %}
+
+      {# Afficher une carte pour la ressource courante #}
       <div class="card">
         <h5 class="card-header">{{stageCourant.entreprise.nom}}</h5>
         <div class="card-body">
@@ -22,4 +20,5 @@
       </div>
       <br />
     {% endfor %}
+  </div>
 {% endblock %}

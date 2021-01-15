@@ -2,5 +2,34 @@
 
 {% block contenu %}
   <h1>Entreprises</h1>
-  <p>Voici la liste des entreprises ayant proposé un stage</p>
+  <h3>Entreprises ayant proposé un stage</h3>
+  <br />
+
+    {% set debutNouvelleLigne = true %}
+
+    {% for entrepriseCourante in entreprises %}
+
+      {# Si on est au début d'une nouvelle ligne, on crée un nouveau composant card-deck #}
+      {% if debutNouvelleLigne == true %}
+        <div class="card-deck">
+        {% set debutNouvelleLigne = false %}
+      {% endif %}
+
+      {# Afficher une carte pour la ressource courante #}
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{entrepriseCourante.nom}}</h5>
+          <p class="card-text">{{entrepriseCourante.adresse}}<br />{{entrepriseCourante.siteWeb}}</p>
+          <a href="{{path('prostages_stagesParEntreprise', {'id': entrepriseCourante.id})}}" class="btn btn-primary">Consulter les stages</a>
+        </div>
+      </div>
+
+      {# Vérifier si il faut passer à la ligne suivante (toutes les 3 ressources affichées) #}
+      {% if loop.index % 3 == 0 %}
+        </div>
+        <br />
+        {% set debutNouvelleLigne = true %}
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endblock %}
