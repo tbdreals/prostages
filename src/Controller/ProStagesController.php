@@ -21,7 +21,7 @@ class ProStagesController extends AbstractController
     public function index(StageRepository $repositoryStage): Response
     {
         // Récupérer tous les stages enregistrés en BD
-         $stages = $repositoryStage->findAll();
+         $stages = $repositoryStage->findAllAvecEntreprises();
 
         // Envoyer les stages récupérés à la vue chargée de les afficher
         return $this->render('pro_stages/index.html.twig',

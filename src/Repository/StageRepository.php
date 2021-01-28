@@ -71,6 +71,22 @@ class StageRepository extends ServiceEntityRepository
         return $requete->execute();
     }
 
+    /**
+     * @return Stage[] Returns an array of Stage objects
+     */
+
+    public function findAllAvecEntreprises()
+    {
+        // On récupère l'entity manager
+        $entityManager = $this->getEntityManager();
+
+        // On crée la requête pour récupérer les stages proposés pour la formation dont le nom est donné en paramètre
+        $requete = $entityManager->createQuery('SELECT s, e FROM App\Entity\Stage s JOIN s.entreprise e');
+
+        // On execute et retourne la requête
+        return $requete->execute();
+    }
+
     /*
     public function findOneBySomeField($value): ?Stage
     {
