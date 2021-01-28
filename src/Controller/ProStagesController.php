@@ -67,30 +67,32 @@ class ProStagesController extends AbstractController
     }
 
     /**
-     * @Route("/entreprises/{id}", name="prostages_stagesParEntreprise")
+     * @Route("/entreprises/{nom}", name="prostages_stagesParEntreprise")
      */
-    public function stagesParEntreprise(EntrepriseRepository $repositoryEntreprise, $id): Response
+    public function stagesParEntreprise(StageRepository $repositoryStage, $nom): Response
     {
         // Je n'utilise plus le mécanisme d'injection de dépendances "poussée" afin de garder le code lisible.
         // On visualise mieux quelle recherche est appliquée sur le repository
-        // Récupérer l'entreprises dont l'id a été fourni
-        $entreprise = $repositoryEntreprise->find($id);
+        // Récupérer les stages dont le nom de l'entreprise a été fourni
+        $stages = $repositoryStage->findByNomEntreprise($nom);
 
         // Envoi de l'entreprise à la vue chargée de l'affichage
         return $this->render('pro_stages/stagesParEntreprise.html.twig',
-                              ['entreprise' => $entreprise]);
+                              ['stages' => $stages,
+                               'nomEntreprise' => $nom]);
     }
 
     /**
-     * @Route("/formations/{id}", name="prostages_stagesParFormation")
+     * @Route("/formations/{nom}", name="prostages_stagesParFormation")
      */
-    public function stagesParFormation(FormationRepository $repositoryFormation, $id): Response
+    public function stagesParFormation(StageRepository $repositoryStage, $nom): Response
     {
-        // Récupérer la formation dont l'id a été fourni
-        $formation = $repositoryFormation->find($id);
+        // Récupérer les stages dont e nom de la formation a été fourni
+        $stages = $repositoryStage->findByNomFormation($nom);
 
         // On envoie ces données à la vue chargée de l'affichage
         return $this->render('pro_stages/stagesParFormation.html.twig',
-                              ['formation' => $formation]);
+                              ['stages' => $stages,
+                               'nomFormation' => $nom]);
     }
 }

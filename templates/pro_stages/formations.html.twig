@@ -20,7 +20,7 @@
             <div class="card-body">
               <h5 class="card-title">{{formationCourante.intitule}}</h5>
               <p class="card-text">{{formationCourante.niveau}}<br />{{formationCourante.ville}}</p>
-              <a href="{{path('prostages_stagesParFormation', {'id': formationCourante.id})}}" class="btn btn-primary">Consulter les stages</a>
+              <a href="{{path('prostages_stagesParFormation', {'nom': formationCourante.intitule})}}" class="btn btn-primary">Consulter les stages</a>
             </div>
           </div>
 
