@@ -33,8 +33,21 @@ class ProStagesController extends AbstractController
      */
     public function ajoutEntreprise(): Response
     {
+        // Création d'une entreprise vierge qui sera remplie par le formulaire
+        $entreprise = new Entreprise();
+
+        // Création du formulaire permettant de saisir une entreprises
+        $formulaireEntreprise = $this->createFormBuilder($entreprise)
+          ->add('nom')
+          ->add('adresse')
+          ->add('site_web')
+          ->getForm();
+
+        // Création de la représentation graphique du $formulaireEntreprise
+        $vueFormulaire = $formulaireEntreprise->createView();
+
         // Afficher la page présentant le formulaire d'ajout d'une entreprise
-        return $this->render('pro_stages/ajoutEntreprise.html.twig');
+        return $this->render('pro_stages/ajoutEntreprise.html.twig', ['vueFormulaire' => $vueFormulaire]);
     }
 
     /**
