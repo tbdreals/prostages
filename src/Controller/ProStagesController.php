@@ -29,6 +29,15 @@ class ProStagesController extends AbstractController
     }
 
     /**
+     * @Route("/ajoutEntreprise", name="prostages_ajoutEntreprise")
+     */
+    public function ajoutEntreprise(): Response
+    {
+        // Afficher la page présentant le formulaire d'ajout d'une entreprise
+        return $this->render('pro_stages/ajoutEntreprise.html.twig');
+    }
+
+    /**
      * @Route("/entreprises", name="prostages_entreprises")
      */
     public function entreprises(EntrepriseRepository $repositoryEntreprise): Response
