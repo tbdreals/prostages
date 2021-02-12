@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 use App\Entity\Stage;
 use App\Entity\Entreprise;
@@ -38,9 +40,9 @@ class ProStagesController extends AbstractController
 
         // Création du formulaire permettant de saisir une entreprises
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
-          ->add('nom')
-          ->add('adresse')
-          ->add('site_web')
+          ->add('nom', TextType::class)
+          ->add('adresse', TextType::class)
+          ->add('site_web', UrlType::class)
           ->getForm();
 
         // Création de la représentation graphique du $formulaireEntreprise
