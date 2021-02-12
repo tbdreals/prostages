@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\HttpFoundation\Request;
+
+use Doctrine\Persistence\ManagerRegistry;
+
 
 use App\Entity\Stage;
 use App\Entity\Entreprise;
@@ -33,7 +37,7 @@ class ProStagesController extends AbstractController
     /**
      * @Route("/ajoutEntreprise", name="prostages_ajoutEntreprise")
      */
-    public function ajoutEntreprise(): Response
+    public function ajoutEntreprise(Request $request, ManagerRegistry $manager): Response
     {
         // Création d'une entreprise vierge qui sera remplie par le formulaire
         $entreprise = new Entreprise();
@@ -44,6 +48,21 @@ class ProStagesController extends AbstractController
           ->add('adresse', TextType::class)
           ->add('site_web', UrlType::class)
           ->getForm();
+
+        /* On demande au formulaire d'analyser la dernière requête Http.
+           Si le tableau POST contenu dans cette requête contient des variables nom, adresse, etc.
+           alors la méthode handleRequest() récupère les valeurs de ces variables
+           et les affecte à l'objet $ressource */
+        $formulaireEntreprise->handleRequest($request);
+
+        if ($formulaireEntreprise->isSubmitted()) {
+          // Enregistrer l'entreprise en base de donnéelse
+          $manager->getManager()->persist($entreprise);
+          $manager->getManager()->flush();
+
+          // Rediriger l'utilisateur vers la page d'accueil
+          return $this->redirectToRoute('pro_stages');
+        }
 
         // Création de la représentation graphique du $formulaireEntreprise
         $vueFormulaire = $formulaireEntreprise->createView();
