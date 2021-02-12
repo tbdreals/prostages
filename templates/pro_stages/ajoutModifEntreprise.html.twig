@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Ajout d'une entreprise
+  {% if action == "ajouter" %}
+    Ajout d'une entreprise
+  {% else %}
+    Modification d'une entreprise
+  {% endif %}
 {% endblock %}
 
 {% block contenu %}
