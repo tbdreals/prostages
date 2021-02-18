@@ -47,6 +47,7 @@ class ProStagesController extends AbstractController
           ->add('nom', TextType::class)
           ->add('adresse', TextType::class)
           ->add('site_web', UrlType::class)
+          ->add('activite', TextType::class)
           ->getForm();
 
         /* On demande au formulaire d'analyser la dernière requête Http.
@@ -85,6 +86,7 @@ class ProStagesController extends AbstractController
           ->add('nom', TextType::class)
           ->add('adresse', TextType::class)
           ->add('site_web', UrlType::class)
+          ->add('activite', TextType::class)
           ->getForm();
 
         /* On demande au formulaire d'analyser la dernière requête Http.

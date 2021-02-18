@@ -6,6 +6,7 @@ use App\Repository\EntrepriseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EntrepriseRepository::class)
@@ -38,6 +39,12 @@ class Entreprise
      * @ORM\OneToMany(targetEntity=Stage::class, mappedBy="entreprise")
      */
     private $stages;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     */
+    private $activite;
 
     public function __construct()
     {
@@ -111,6 +118,18 @@ class Entreprise
                 $stage->setEntreprise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivite(): ?string
+    {
+        return $this->activite;
+    }
+
+    public function setActivite(string $activite): self
+    {
+        $this->activite = $activite;
 
         return $this;
     }
