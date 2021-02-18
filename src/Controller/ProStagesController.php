@@ -56,7 +56,7 @@ class ProStagesController extends AbstractController
            et les affecte à l'objet $ressource */
         $formulaireEntreprise->handleRequest($request);
 
-        if ($formulaireEntreprise->isSubmitted()) {
+        if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()) {
           // Enregistrer l'entreprise en base de donnéelse
           $manager->getManager()->persist($entreprise);
           $manager->getManager()->flush();

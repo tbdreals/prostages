@@ -22,6 +22,12 @@ class Entreprise
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 255,
+     *      minMessage = "Le nom de l'entreprise doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "Le nom de l'entreprise ne doit pas exceder {{ limit }} caractères."
+     * )
      */
     private $nom;
 
@@ -32,6 +38,7 @@ class Entreprise
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url
      */
     private $siteWeb;
 
