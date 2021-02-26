@@ -10,14 +10,18 @@
 
 {% block contenu %}
   <h3>Saisissez les caractéristiques de l'entreprise que vous souhaitez ajouter.</h3>
-  {{ form_start(vueFormulaire) }}
+  <div class="row">
+    <div class="col-5">
+      {{ form_start(vueFormulaire) }}
 
-    {{ form_row(vueFormulaire.nom, {'attr':{'placeholder':"Nom de l'entreprise..."}}) }}
-    {{ form_row(vueFormulaire.activite, {'attr':{'placeholder':"Activité de l'entreprise..."}}) }}
-    {{ form_row(vueFormulaire.adresse, {'attr':{'placeholder':"Adresse de l'entreprise..."}}) }}
-    {{ form_row(vueFormulaire.site_web, {'attr':{'placeholder':"www.monentreprise.fr..."}}) }}
+        {{ form_row(vueFormulaire.nom, {'attr':{'placeholder':"Nom de l'entreprise..."}}) }}
+        {{ form_row(vueFormulaire.activite, {'attr':{'placeholder':"Activité de l'entreprise..."}}) }}
+        {{ form_row(vueFormulaire.adresse, {'attr':{'placeholder':"Adresse de l'entreprise..."}}) }}
+        {{ form_row(vueFormulaire.site_web, {'attr':{'placeholder':"www.monentreprise.fr..."}}) }}
 
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
 
-  {{ form_end(vueFormulaire) }}
+      {{ form_end(vueFormulaire) }}
+    </div>
+  </div>
 {% endblock %}
