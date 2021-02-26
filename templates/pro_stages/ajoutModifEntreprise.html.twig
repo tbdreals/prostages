@@ -10,7 +10,7 @@
 
 {% block contenu %}
   <h3>Saisissez les caractéristiques de l'entreprise que vous souhaitez ajouter.</h3>
-  {{ form_start(vueFormulaire, {'attr':{'novalidate':"novalidate"}}) }}
+  {{ form_start(vueFormulaire) }}
 
     {{ form_row(vueFormulaire.nom, {'attr':{'placeholder':"Nom de l'entreprise..."}}) }}
     {{ form_row(vueFormulaire.activite, {'attr':{'placeholder':"Activité de l'entreprise..."}}) }}
