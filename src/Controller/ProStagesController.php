@@ -15,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
+use App\Form\EntrepriseType;
 use App\Repository\StageRepository;
 use App\Repository\EntrepriseRepository;
 use App\Repository\FormationRepository;
@@ -43,12 +44,7 @@ class ProStagesController extends AbstractController
         $entreprise = new Entreprise();
 
         // Création du formulaire permettant de saisir une entreprises
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-          ->add('nom', TextType::class)
-          ->add('adresse', TextType::class)
-          ->add('site_web', UrlType::class)
-          ->add('activite', TextType::class)
-          ->getForm();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
 
         /* On demande au formulaire d'analyser la dernière requête Http.
            Si le tableau POST contenu dans cette requête contient des variables nom, adresse, etc.
@@ -82,12 +78,7 @@ class ProStagesController extends AbstractController
     {
         // Le mécanisme d'injection de dépendance a récupéré pour nous l'entité Entreprise dont l'id a été passé par l'URL
         // Création du formulaire permettant de saisir une entreprises
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-          ->add('nom', TextType::class)
-          ->add('adresse', TextType::class)
-          ->add('site_web', UrlType::class)
-          ->add('activite', TextType::class)
-          ->getForm();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
 
         /* On demande au formulaire d'analyser la dernière requête Http.
            Si le tableau POST contenu dans cette requête contient des variables nom, adresse, etc.
