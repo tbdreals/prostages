@@ -11,11 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\Persistence\ManagerRegistry;
 
-
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
 use App\Form\EntrepriseType;
+use App\Form\StageType;
 use App\Repository\StageRepository;
 use App\Repository\EntrepriseRepository;
 use App\Repository\FormationRepository;
@@ -34,6 +34,74 @@ class ProStagesController extends AbstractController
         return $this->render('pro_stages/index.html.twig',
                               ['stages' => $stages]);
     }
+
+    /**
+     * @Route("/entreprises", name="prostages_entreprises")
+     */
+     public function entreprises(EntrepriseRepository $repositoryEntreprise): Response
+     {
+         // Récupérer toutes les entreprises enregistrées en BD
+         $entreprises = $repositoryEntreprise->findAll();
+
+         // Envoyer les entreprises récupérées à la vue chargée de les afficher
+         return $this->render('pro_stages/entreprises.html.twig',
+                                  ['entreprises' => $entreprises]);
+     }
+
+     /**
+      * @Route("/formations", name="prostages_formations")
+      */
+     public function formations(FormationRepository $repositoryFormation): Response
+     {
+         // Récupérer toutes les formations enregistrées en BD
+         $formations = $repositoryFormation->findAll();
+
+         // Envoyer les formations récupérées à la vue chargée de les afficher
+         return $this->render('pro_stages/formations.html.twig',
+                               ['formations' => $formations]);
+     }
+
+     /**
+      * @Route("/stages/{id}", name="prostages_stages")
+      */
+     public function stages(Stage $stage): Response
+     {
+         // L'utilisation du mécanisme d'injection nous permet d'obtenir directement l'objet stage
+         // La recherche par identifiant est effectuée automatiquement
+         // Envoi du stage à la vue chargée de l'affichage
+         return $this->render('pro_stages/stages.html.twig',
+                                  ['stage' => $stage]);
+     }
+
+     /**
+      * @Route("/entreprises/{nom}", name="prostages_stagesParEntreprise")
+      */
+     public function stagesParEntreprise(StageRepository $repositoryStage, $nom): Response
+     {
+         // Je n'utilise plus le mécanisme d'injection de dépendances "poussée" afin de garder le code lisible.
+         // On visualise mieux quelle recherche est appliquée sur le repository
+         // Récupérer les stages dont le nom de l'entreprise a été fourni
+         $stages = $repositoryStage->findByNomEntreprise($nom);
+
+         // Envoi de l'entreprise à la vue chargée de l'affichage
+         return $this->render('pro_stages/stagesParEntreprise.html.twig',
+                               ['stages' => $stages,
+                                'nomEntreprise' => $nom]);
+     }
+
+     /**
+      * @Route("/formations/{nom}", name="prostages_stagesParFormation")
+      */
+     public function stagesParFormation(StageRepository $repositoryStage, $nom): Response
+     {
+         // Récupérer les stages dont e nom de la formation a été fourni
+         $stages = $repositoryStage->findByNomFormation($nom);
+
+         // On envoie ces données à la vue chargée de l'affichage
+         return $this->render('pro_stages/stagesParFormation.html.twig',
+                               ['stages' => $stages,
+                                'nomFormation' => $nom]);
+     }
 
     /**
      * @Route("/ajoutEntreprise", name="prostages_ajoutEntreprise")
@@ -106,70 +174,38 @@ class ProStagesController extends AbstractController
     }
 
     /**
-     * @Route("/entreprises", name="prostages_entreprises")
-     */
-    public function entreprises(EntrepriseRepository $repositoryEntreprise): Response
-    {
-        // Récupérer toutes les entreprises enregistrées en BD
-        $entreprises = $repositoryEntreprise->findAll();
+      * @Route("/ajoutStage", name="prostages_ajoutStage")
+      */
+        public function ajoutStage(Request $request, ManagerRegistry $manager): Response
+        {
+            // Création d'un stage vierge qui sera rempli par le formulaire
+            $stage = new Stage();
 
-        // Envoyer les entreprises récupérées à la vue chargée de les afficher
-        return $this->render('pro_stages/entreprises.html.twig',
-                              ['entreprises' => $entreprises]);
-    }
+            // Création du formulaire permettant de saisir un stage
+            $formulaireStage = $this->createForm(StageType::class, $stage);
 
-    /**
-     * @Route("/formations", name="prostages_formations")
-     */
-    public function formations(FormationRepository $repositoryFormation): Response
-    {
-        // Récupérer toutes les formations enregistrées en BD
-        $formations = $repositoryFormation->findAll();
+            /* On demande au formulaire d'analyser la dernière requête Http.
+               Si le tableau POST contenu dans cette requête contient des variables nom, adresse, etc.
+               alors la méthode handleRequest() récupère les valeurs de ces variables
+               et les affecte à l'objet $ressource */
+            $formulaireStage->handleRequest($request);
 
-        // Envoyer les formations récupérées à la vue chargée de les afficher
-        return $this->render('pro_stages/formations.html.twig',
-                              ['formations' => $formations]);
-    }
+            if ($formulaireStage->isSubmitted() && $formulaireStage->isValid()) {
+              // Enregistrer le stage en base de donnéelse
+              $manager->getManager()->persist($stage);
+              $manager->getManager()->flush();
 
-    /**
-     * @Route("/stages/{id}", name="prostages_stages")
-     */
-    public function stages(Stage $stage): Response
-    {
-        // L'utilisation du mécanisme d'injection nous permet d'obtenir directement l'objet stage
-        // La recherche par identifiant est effectuée automatiquement
-        // Envoi du stage à la vue chargée de l'affichage
-        return $this->render('pro_stages/stages.html.twig',
-                              ['stage' => $stage]);
-    }
+              // Rediriger l'utilisateur vers la page d'accueil
+              return $this->redirectToRoute('pro_stages');
+            }
 
-    /**
-     * @Route("/entreprises/{nom}", name="prostages_stagesParEntreprise")
-     */
-    public function stagesParEntreprise(StageRepository $repositoryStage, $nom): Response
-    {
-        // Je n'utilise plus le mécanisme d'injection de dépendances "poussée" afin de garder le code lisible.
-        // On visualise mieux quelle recherche est appliquée sur le repository
-        // Récupérer les stages dont le nom de l'entreprise a été fourni
-        $stages = $repositoryStage->findByNomEntreprise($nom);
+            // Création de la représentation graphique du $formulaireStage
+            $vueFormulaire = $formulaireStage->createView();
 
-        // Envoi de l'entreprise à la vue chargée de l'affichage
-        return $this->render('pro_stages/stagesParEntreprise.html.twig',
-                              ['stages' => $stages,
-                               'nomEntreprise' => $nom]);
-    }
-
-    /**
-     * @Route("/formations/{nom}", name="prostages_stagesParFormation")
-     */
-    public function stagesParFormation(StageRepository $repositoryStage, $nom): Response
-    {
-        // Récupérer les stages dont e nom de la formation a été fourni
-        $stages = $repositoryStage->findByNomFormation($nom);
-
-        // On envoie ces données à la vue chargée de l'affichage
-        return $this->render('pro_stages/stagesParFormation.html.twig',
-                              ['stages' => $stages,
-                               'nomFormation' => $nom]);
-    }
+            // Afficher la page présentant le formulaire d'ajout d'une entreprise
+            return $this->render('pro_stages/ajoutModifStage.html.twig', [
+                'vueFormulaire' => $vueFormulaire,
+                'action' => "ajouter"
+                ]);
+        }
 }

@@ -14,10 +14,12 @@
         <div class="col-5">
             {{ form_start(vueFormulaire) }}
 
-            {{ form_row(vueFormulaire.nom, {'attr':{'placeholder':"Nom de l'entreprise..."}}) }}
-            {{ form_row(vueFormulaire.activite, {'attr':{'placeholder':"Activité de l'entreprise..."}}) }}
-            {{ form_row(vueFormulaire.adresse, {'attr':{'placeholder':"Adresse de l'entreprise..."}}) }}
-            {{ form_row(vueFormulaire.site_web, {'attr':{'placeholder':"www.monentreprise.fr..."}}) }}
+            {{ form_row(vueFormulaire.intitule, {'attr':{'placeholder':"Intitule du stage..."}}) }}
+            {{ form_row(vueFormulaire.description, {'attr':{'placeholder':"Description du stage..."}}) }}
+            {{ form_row(vueFormulaire.competenceRequise, {'attr':{'placeholder':"Compétences requises..."}}) }}
+            {{ form_row(vueFormulaire.dateDebut, {'attr':{'placeholder':"Date de début..."}}) }}
+            {{ form_row(vueFormulaire.duree, {'attr':{'placeholder':"Durée du stage en jours..."}}) }}
+            {{ form_row(vueFormulaire.emailEntreprise, {'attr':{'placeholder':"Email de l'entreprise..."}}) }}
 
             <button type="submit" class="btn btn-primary">Enregistrer</button>
 

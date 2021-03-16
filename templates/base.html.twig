@@ -8,6 +8,7 @@
         <!-- AJOUT CSS -->
         {% block stylesheets %}
           <link href="{{asset('/css/bootstrap.css')}}" rel="stylesheet">
+          <link href="{{asset('/css/fontello.css')}}" rel="stylesheet">
         {% endblock %}
     </head>
     <body>
@@ -16,10 +17,16 @@
         <!-- ENTETE TITRE ET LOGO -->
         {% block entete %}
           <div class="row">
-            <div class="col">
+            <div class="col-7">
               <br />
               <h1>ProStages</h1>
               <br />
+            </div>
+
+            <div class="col-5">
+              <br /><br />
+              <button type="button" class="btn btn-link"><a href="/ajoutEntreprise"><i class="demo-icon icon-user-plus"></i> Ajouter une Entreprise</a></button>
+              <button type="button" class="btn btn-link"><a href="/ajoutStage"><i class="demo-icon icon-user-plus"></i> Ajouter un Stage</a></button>
             </div>
           </div>
         {% endblock %}
@@ -39,7 +46,6 @@
                     <a class="nav-link" href="/">Accueil</a>
                     <a class="nav-link" href="/entreprises">Entreprises</a>
                     <a class="nav-link" href="/formations">Formations</a>
-                    <a class="nav-link" href="/ajoutEntreprise">Ajouter une Entreprise</a>
                   </div>
                 </div>
               </div>
