@@ -11,7 +11,7 @@
 {% block contenu %}
     <h3>Saisissez les caractéristiques du stage que vous souhaitez ajouter.</h3>
     <div class="row">
-        <div class="col-5">
+        <div class="col-7">
             {{ form_start(vueFormulaire) }}
 
             {{ form_row(vueFormulaire.intitule, {'attr':{'placeholder':"Intitule du stage..."}}) }}
@@ -21,6 +21,7 @@
             {{ form_row(vueFormulaire.duree, {'attr':{'placeholder':"Durée du stage en jours..."}}) }}
             {{ form_row(vueFormulaire.emailEntreprise, {'attr':{'placeholder':"Email de l'entreprise..."}}) }}
             {{ form_row(vueFormulaire.entreprise, {'label':'Entreprise d\'accueil'}) }}
+            {{ form_row(vueFormulaire.formations, {'label':'Le stage est proposé aux formations suivantes :'}) }}
 
             <button type="submit" class="btn btn-primary">Enregistrer</button>
 
