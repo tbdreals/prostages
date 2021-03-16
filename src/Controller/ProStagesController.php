@@ -154,7 +154,7 @@ class ProStagesController extends AbstractController
            et les affecte à l'objet $ressource */
         $formulaireEntreprise->handleRequest($request);
 
-        if ($formulaireEntreprise->isSubmitted()) {
+        if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()) {
           // Enregistrer l'entreprise en base de donnéelse
           $manager->getManager()->persist($entreprise);
           $manager->getManager()->flush();
@@ -208,4 +208,38 @@ class ProStagesController extends AbstractController
                 'action' => "ajouter"
                 ]);
         }
+
+     /**
+       * @Route("/modificationStage/{id}", name="prostages_modificationStage")
+       */
+         public function modificationStage(Request $request, ManagerRegistry $manager, Stage $stage): Response
+         {
+             // Le mécanisme d'injection de dépendance a récupéré pour nous l'entité Entreprise dont l'id a été passé par l'URL
+             // Création du formulaire permettant de saisir une entreprises
+             $formulaireStage = $this->createForm(StageType::class, $stage);
+
+             /* On demande au formulaire d'analyser la dernière requête Http.
+                Si le tableau POST contenu dans cette requête contient des variables nom, adresse, etc.
+                alors la méthode handleRequest() récupère les valeurs de ces variables
+                et les affecte à l'objet $ressource */
+             $formulaireStage->handleRequest($request);
+
+             if ($formulaireStage->isSubmitted() && $formulaireStage->isValid()) {
+               // Enregistrer le stage en base de donnéelse
+               $manager->getManager()->persist($stage);
+               $manager->getManager()->flush();
+
+               // Rediriger l'utilisateur vers la page d'accueil
+               return $this->redirectToRoute('pro_stages');
+             }
+
+             // Création de la représentation graphique du $formulaireEntreprise
+             $vueFormulaire = $formulaireStage->createView();
+
+             // Afficher la page présentant le formulaire d'ajout d'une entreprise
+             return $this->render('pro_stages/ajoutModifStage.html.twig', [
+                 'vueFormulaire' => $vueFormulaire,
+                 'action' => "modifier"
+                 ]);
+         }
 }

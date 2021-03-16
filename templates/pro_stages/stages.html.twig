@@ -39,5 +39,5 @@
         <li>{{formationCourante.intitule}}</li>
       {% endfor %}
     </ul>
-  </li>
+    <a href="{{path('prostages_modificationStage', {'id': stage.id})}}" class="card-link">Modifier le Stage</a>
 {% endblock %}

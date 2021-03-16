@@ -15,7 +15,10 @@
           <p class="card-text">{{stageCourant.description}}<br /><br />
             Début du stage : {{stageCourant.dateDebut | date("d/m/Y")}}
           </p>
-          <a href="{{path('prostages_stages', {'id': stageCourant.id})}}" class="btn btn-primary">Consulter le stage</a>
+          <div class="row justify-content-between">
+            <div class="col-4"><a href="{{path('prostages_stages', {'id': stageCourant.id})}}" class="btn btn-primary">Consulter le stage</a></div>
+            <div class="col-1"><a href="{{path('prostages_modificationStage', {'id': stageCourant.id})}}" class="card-link">Modifier</a></div>
+          </div>
         </div>
       </div>
       <br />

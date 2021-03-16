@@ -22,8 +22,10 @@
           <h5 class="card-title">{{entrepriseCourante.nom}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{entrepriseCourante.adresse}}<br />{{entrepriseCourante.siteWeb}}</h6>
           <p class="card-text">{{entrepriseCourante.activite}}</p>
-          <a href="{{path('prostages_stagesParEntreprise', {'nom': entrepriseCourante.nom})}}" class="card-link">Consulter les stages</a>
-          <a href="{{path('prostages_modificationEntreprise', {'id': entrepriseCourante.id})}}" class="card-link">Modifier</a>
+          <div class="row justify-content-between">
+            <div class="col-7"><a href="{{path('prostages_stagesParEntreprise', {'nom': entrepriseCourante.nom})}}" class="btn btn-primary">Consulter les stages</a></div>
+            <div class="col-4"><a href="{{path('prostages_modificationEntreprise', {'id': entrepriseCourante.id})}}" class="card-link">Modifier</a></div>
+          </div>
         </div>
       </div>
 
