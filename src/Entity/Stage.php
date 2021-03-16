@@ -25,7 +25,7 @@ class Stage
     private $intitule;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -55,7 +55,7 @@ class Stage
     private $formations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="stages")
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="stages", cascade={"persist"})
      */
     private $entreprise;
 

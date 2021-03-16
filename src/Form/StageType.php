@@ -21,12 +21,7 @@ class StageType extends AbstractType
             ->add('dateDebut')
             ->add('duree')
             ->add('emailEntreprise')
-            ->add('entreprise', EntityType::class, array(
-                'class' => Entreprise::class,
-                'choice_label' => 'nom',
-                'multiple' => false,
-                'expanded' => true,
-            ))
+            ->add('entreprise', EntrepriseType::class)
             ->add('formations', EntityType::class, array(
                 'class' => Formation::class,
                 'choice_label' => function(Formation $formation)
