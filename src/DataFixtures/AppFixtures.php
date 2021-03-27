@@ -16,10 +16,10 @@ class AppFixtures extends Fixture
     {
         // Création de 2 utilisateurs de test
 
-        // Identifiant : tbdreals@gmail.com
+        // Identifiant : tanguy@gmail.com
         // Mot de passe : tanguy
         $tanguy = new User();
-        $tanguy->setEmail('tbdreals@gmail.com');
+        $tanguy->setEmail('tanguy@gmail.com');
         $tanguy->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
         $tanguy->setPassword('$2y$10$sDFAJ56Rn4nB4QoCuXsyjODO7VR5A99DHyHY8fk2Lyk7ucbVhfBQe');
         $manager->persist($tanguy);
@@ -84,11 +84,11 @@ class AppFixtures extends Fixture
           // On génère un nombre aléatoire de stages à générer pour chaque formation
           $nbStagesAGenerer = $faker -> numberBetween($min = 0, $max = 7);
 
-          // Puis on génère automatiquement chacun de ces stages
+          // Puis on génère automatiquement chacun de ses stages
           for ($numStage = 0; $numStage < $nbStagesAGenerer; $numStage++) {
             // En remplissant ses caractéristiques
             $stage = new Stage();
-            $stage -> setIntitule($faker -> sentence($nbWords = 3, $variableNbWords = true));
+            $stage -> setIntitule($faker -> jobTitle());
             $stage -> setDescription($faker -> realText($MaxNbChars = 200, $indexSize = 2));
             $stage -> setDateDebut($faker -> dateTimeBetween ($startDate = 'now', $endDate = '+6 months', $timezone = 'Europe/Paris'));
             $stage -> setDuree($faker -> numberBetween($min = 30, $max = 180));

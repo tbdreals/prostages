@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,7 +42,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/inscription", name="app_inscription")
      */
-     public function inscription(Request $request, ManagerRegistry $manager): Response
+     public function inscription(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
      {
         // Création d'un utilisateur vide qui sera rempli par le formulaire
         $utilisateur = new User();
@@ -56,15 +57,22 @@ class SecurityController extends AbstractController
            $formulaireUtilisateur->handleRequest($request);
 
            if ($formulaireUtilisateur->isSubmitted() && $formulaireUtilisateur->isValid()) {
-             // Enregistrer le stage en base de donnéelse
-             //$manager->getManager()->persist($entreprise);
-             //$manager->getManager()->flush();
+             // Attribuer un rôle à l'utilisateur
+             $utilisateur->setRoles(['ROLE_USER']);
+
+             // Encoder le mot de passe de l'utilisateur
+             $encodagePassword = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
+             $utilisateur->setPassword($encodagePassword);
+
+             // Enregistrer l'utilisateur en base de donnéelse
+             $manager->getManager()->persist($utilisateur);
+             $manager->getManager()->flush();
 
              // Rediriger l'utilisateur vers la page d'accueil
-             return $this->redirectToRoute('pro_stages');
+             return $this->redirectToRoute('app_login');
            }
 
-           // Création de la représentation graphique du $formulaireStage
+           // Création de la représentation graphique du $formulaireUtilisateur
            $vueFormulaire = $formulaireUtilisateur->createView();
 
            // Afficher la page présentant le formulaire d'ajout d'une entreprise
