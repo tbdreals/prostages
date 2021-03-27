@@ -7,12 +7,31 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Formation;
 use App\Entity\Entreprise;
 use App\Entity\Stage;
+use App\Entity\User;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        // Création de 2 utilisateurs de test
+
+        // Identifiant : tbdreals@gmail.com
+        // Mot de passe : tanguy
+        $tanguy = new User();
+        $tanguy->setEmail('tbdreals@gmail.com');
+        $tanguy->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        $tanguy->setPassword('$2y$10$sDFAJ56Rn4nB4QoCuXsyjODO7VR5A99DHyHY8fk2Lyk7ucbVhfBQe');
+        $manager->persist($tanguy);
+
+        // Identifiant : antoine@gmail.com
+        // Mot de passe : antoine
+        $antoine = new User();
+        $antoine->setEmail('antoine@gmail.com');
+        $antoine->setRoles(['ROLE_USER']);
+        $antoine->setPassword('$2y$10$JviqSGEczrS2kIVdd5cDPeq/l7rpUNsfoOBRkSJFb2bpA33YpNI42');
+        $manager->persist($antoine);
+
         // On va utiliser l'outil faker afin de générer du contenu
         $faker = \Faker\Factory::create('fr_FR');
 
@@ -24,16 +43,19 @@ class AppFixtures extends Fixture
         $total -> setNom("Total");
         $total -> setAdresse("10 bis rue des Cervoises, 64000 PAU");
         $total -> setSiteWeb("https://www.total.fr");
+        $total -> setActivite("Production de pétrole.");
 
         $safran = new Entreprise ();
         $safran -> setNom("Safran");
         $safran -> setAdresse("1632 avenue de l'Amiral Landrin, 64000 PAU");
         $safran -> setSiteWeb("https://www.safran.com");
+        $safran -> setActivite("Production d'épices.");
 
         $ArcadeAndCo = new Entreprise ();
         $ArcadeAndCo -> setNom("ArcadeAndCo");
         $ArcadeAndCo -> setAdresse("2 allée du Parc Montaury, 64600 ANGLET");
         $ArcadeAndCo -> setSiteWeb("https://www.arcadeandco.fr");
+        $ArcadeAndCo -> setActivite("Fabrication de bornes d'arcade.");
 
         // On stocke les entreprises dans un tableau
         $tableauEntreprises = array($total, $safran, $ArcadeAndCo);
