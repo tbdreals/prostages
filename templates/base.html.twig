@@ -16,25 +16,28 @@
 
         <!-- ENTETE TITRE ET LOGO -->
         {% block entete %}
-          <div class="row">
-            <div class="col-5">
+          <div class="row justify-content-between">
+            <div class="col-9">
               <br />
               <h1>ProStages</h1>
               <br />
             </div>
 
-            <div class="col-5">
-              <br /><br />
-              <button type="button" class="btn btn-link"><a href="/ajoutEntreprise"><i class="demo-icon icon-user-plus"></i> Ajouter une Entreprise</a></button>
-              <button type="button" class="btn btn-link"><a href="/ajoutStage"><i class="demo-icon icon-user-plus"></i> Ajouter un Stage</a></button>
-            </div>
 
-            <div class="col-2">
-              <br /><br />
               {% if is_granted('ROLE_USER') %}
-                <a href="{{path('app_logout')}}"><button class="btn btn-danger">Deconnexion</button></a>
+                <div class="col-2">
+                  <br /><br />
+                  <a href="{{path('app_logout')}}"><button class="btn btn-danger">Deconnexion</button></a>
+
               {% else %}
-                <a href="{{path('app_login')}}"><button class="btn btn-success">Connexion</button></a>
+                <div class="col-1">
+                  <br /><br />
+                  <a href="{{path('app_inscription')}}"><button class="btn btn-dark">Inscription</button></a>
+                </div>
+
+                <div class="col-2">
+                  <br /><br />
+                  <a href="{{path('app_login')}}"><button class="btn btn-success">Connexion</button></a>
               {% endif %}
             </div>
           </div>
@@ -64,6 +67,7 @@
         <br />
         {% endblock %}
 
+        {# Informations de connexion #}
         {% if is_granted('ROLE_USER') %}
           <div class="row justify-content-end">
             <h4>
@@ -72,6 +76,18 @@
             </h4>
           </div>
         {% endif %}
+
+        <div class="row justify-content-end">
+          {# Options ADMIN #}
+          {% if is_granted('ROLE_ADMIN') %}
+              <h4><a href="/admin/formation">Gérer les Formations</a></h4>
+              <button type="button" class="btn btn-link"><a href="/ajoutEntreprise"><i class="demo-icon icon-user-plus"></i> Ajouter une Entreprise</a></button>
+              <button type="button" class="btn btn-link"><a href="/ajoutStage"><i class="demo-icon icon-user-plus"></i> Ajouter un Stage</a></button>
+
+          {% elseif is_granted('ROLE_USER') %}
+            <button type="button" class="btn btn-link"><a href="/ajoutStage"><i class="demo-icon icon-user-plus"></i> Ajouter un Stage</a></button>
+          {% endif %}
+        </div>
 
         <!-- CONTENU DE LA PAGE A COMPLETER -->
         {% block contenu %}

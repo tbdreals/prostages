@@ -8,9 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpFoundation\Request;
-
 use Doctrine\Persistence\ManagerRegistry;
-
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
