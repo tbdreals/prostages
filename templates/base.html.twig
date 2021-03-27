@@ -17,7 +17,7 @@
         <!-- ENTETE TITRE ET LOGO -->
         {% block entete %}
           <div class="row">
-            <div class="col-7">
+            <div class="col-5">
               <br />
               <h1>ProStages</h1>
               <br />
@@ -27,6 +27,15 @@
               <br /><br />
               <button type="button" class="btn btn-link"><a href="/ajoutEntreprise"><i class="demo-icon icon-user-plus"></i> Ajouter une Entreprise</a></button>
               <button type="button" class="btn btn-link"><a href="/ajoutStage"><i class="demo-icon icon-user-plus"></i> Ajouter un Stage</a></button>
+            </div>
+
+            <div class="col-2">
+              <br /><br />
+              {% if is_granted('ROLE_USER') %}
+                <a href="{{path('app_logout')}}"><button class="btn btn-danger">Deconnexion</button></a>
+              {% else %}
+                <a href="{{path('app_login')}}"><button class="btn btn-success">Connexion</button></a>
+              {% endif %}
             </div>
           </div>
         {% endblock %}
@@ -54,6 +63,15 @@
         </div>
         <br />
         {% endblock %}
+
+        {% if is_granted('ROLE_USER') %}
+          <div class="row justify-content-end">
+            <h4>
+              <small class="text-muted">Connecté en tant que</small>
+              {{ app.user.email }}
+            </h4>
+          </div>
+        {% endif %}
 
         <!-- CONTENU DE LA PAGE A COMPLETER -->
         {% block contenu %}
